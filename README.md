@@ -1,6 +1,10 @@
 # Datadocs
 
-Datadocs automatically creates simple documentation for a set of datasets stored in `.csv` files.
+Datadocs automatically creates simple documentation for a set of datasets stored in `.csv` files. Organize your `.csv` files in folders in the `/data` directory, then run `makedocs.py` to generate static file documentation you can view in a browser.
+
+For each dataset, the number of rows and columns are calculated and presented, and each dataset variables are searchable with  a datatype and percent of observations with non-missing answers.
+
+To view a sample of what the documentation looks like, clone this repository and open the `index.html` file in `/docs`.
 
 ## Usage
 
@@ -8,7 +12,7 @@ Store your `.csv` files in subdirectories in the `/data` directory, replacing `/
 
 To generate documentation, run:
 
-```
+```shell
 $ python makedocs.py
 ```
 
