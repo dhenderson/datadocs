@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+{% block title %}{{dataset.name}}{% endblock %}
+{% block content %}
+
+  <script type="text/javascript">
+    $(document).ready(function() {
+        $('#dataset-table').DataTable();
+    } );
+  </script>
+
+  <h1>{{dataset.name}}</h1>
+  <div class="row">
+    <div class="col-md-12">
+      <table class="table" id="dataset-table">
+        <thead>
+          <tr>
+            <th>Column</th>
+            <th>Data type</th>
+            <th>Percent answerd</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for column in dataset.columns %}
+          <tr>
+            <td>{{column.name}}</td>
+            <td>{{column.dataType}}</td>
+            <td>{{column.percentNotNA}}</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+{% endblock %}

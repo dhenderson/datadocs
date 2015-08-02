@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+{% block title %}Home{% endblock %}
+{% block content %}
+  <h1>Home</h1>
+  <div class="row">
+    <div class="col-md-12">
+      <ul>
+        {% for dataFolder in dataFolders %}
+          <li>
+            <a href="{{dataFolder.name}}/index.html">
+              {{dataFolder.name}}
+            </a>
+          </li>
+        {% endfor %}
+      </ul>
+    </div>
+  </div>
+{% endblock %}
