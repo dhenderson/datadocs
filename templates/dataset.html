@@ -1,5 +1,11 @@
 {% extends "base.html" %}
-{% block title %}{{dataset.name}}{% endblock %}
+{% block title %}
+  {% if dataset.title %}
+    {{dataset.title}}
+  {% else %}
+    {{dataset.name}}
+  {% endif %}
+{% endblock %}
 {% block content %}
 
   <script type="text/javascript">
@@ -8,13 +14,19 @@
     } );
   </script>
 
+  {% if dataset.title %}
+  <h1>{{dataset.title}}</h1>
+  {% else %}
   <h1>{{dataset.name}}</h1>
+  {% endif %}
   <div class="row">
     <div class="col-md-12">
       <table class="table" id="dataset-table">
         <thead>
           <tr>
             <th>Column</th>
+            <th>Category</th>
+            <th>Description</th>
             <th>Data type</th>
             <th>Percent answerd</th>
           </tr>
@@ -23,6 +35,8 @@
           {% for column in dataset.columns %}
           <tr>
             <td>{{column.name}}</td>
+            <td>{{column.category}}</td>
+            <td>{{column.description}}</td>
             <td>{{column.dataType}}</td>
             <td>{{column.percentNotNA}}</td>
           </tr>

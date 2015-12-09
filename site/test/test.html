@@ -9,22 +9,34 @@
     <link rel="stylesheet" href="../static/datatables/css/jquery.dataTables.css" />
     <script src="../static/datatables/js/jquery.dataTables.min.js"></script>
     <link rel="stylesheet" href="../static/style.css" />
-    <title>test.csv - My Webpage</title>
+    <title>
+  
+    Test
+  
+</title>
     
 </head>
 <body>
     <div class="header">
       <div class="container" style="font-size: 1.3em;">
-        <a href="../index.html">Home</a>
+        <a href="../index.html">Sample documentation</a>
         <!-- bread crumbs -->
         
-          > <a href="../test/index.html">test</a>
-          > test.csv
+          > <a href="../test/index.html">
+            
+            Test data
+            
+          </a>
+          >
+          
+            Test
+          
         
       </div>
     </div>
     <div class="container">
-      
+      <div class="content">
+        
 
   <script type="text/javascript">
     $(document).ready(function() {
@@ -32,13 +44,17 @@
     } );
   </script>
 
-  <h1>test.csv</h1>
+  
+  <h1>Test</h1>
+  
   <div class="row">
     <div class="col-md-12">
       <table class="table" id="dataset-table">
         <thead>
           <tr>
             <th>Column</th>
+            <th>Category</th>
+            <th>Description</th>
             <th>Data type</th>
             <th>Percent answerd</th>
           </tr>
@@ -46,13 +62,25 @@
         <tbody>
           
           <tr>
+            <td>Name</td>
+            <td>Demographics</td>
+            <td>This is the name of the person</td>
+            <td>Categorical</td>
+            <td>100.0</td>
+          </tr>
+          
+          <tr>
             <td>Age</td>
+            <td>Demographics</td>
+            <td>How old this person is</td>
             <td>Numeric</td>
             <td>100.0</td>
           </tr>
           
           <tr>
             <td>Birth state</td>
+            <td>General</td>
+            <td>State the individual was born in</td>
             <td>Categorical</td>
             <td>100.0</td>
           </tr>
@@ -63,6 +91,10 @@
   </div>
 
 
+      </div>
+      <div class="footer">
+        Made with <a href="https://github.com/dhenderson/datadocs">Datadocs</a>
+      </div>
     </div>
 </body>
 </html>

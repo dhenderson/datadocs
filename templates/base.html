@@ -9,24 +9,45 @@
     <link rel="stylesheet" href="{{static}}/datatables/css/jquery.dataTables.css" />
     <script src="{{static}}/datatables/js/jquery.dataTables.min.js"></script>
     <link rel="stylesheet" href="{{static}}/style.css" />
-    <title>{% block title %}{% endblock %} - My Webpage</title>
+    <title>{% block title %}{% endblock %}</title>
     {% endblock %}
 </head>
 <body>
     <div class="header">
       <div class="container" style="font-size: 1.3em;">
-        <a href="{{home}}">Home</a>
+        <a href="{{home}}">{{docTitle}}</a>
         <!-- bread crumbs -->
         {% if dataFolder %}
-          > {{dataFolder.name}}
+          >
+          {% if dataFolder.title %}
+            {{dataFolder.title}}
+          {% else %}
+            {{dataFolder.name}}
+          {% endif %}
         {% elif dataset %}
-          > <a href="../{{dataset.dataFolder.name}}/index.html">{{dataset.dataFolder.name}}</a>
-          > {{dataset.name}}
+          > <a href="../{{dataset.dataFolder.name}}/index.html">
+            {% if dataset.dataFolder.title %}
+            {{dataset.dataFolder.title}}
+            {% else %}
+            {{dataset.dataFolder.name}}
+            {% endif %}
+          </a>
+          >
+          {% if dataset.title %}
+            {{dataset.title}}
+          {% else %}
+            {{dataset.name}}
+          {% endif %}
         {% endif %}
       </div>
     </div>
     <div class="container">
-      {% block content %}{% endblock %}
+      <div class="content">
+        {% block content %}{% endblock %}
+      </div>
+      <div class="footer">
+        Made with <a href="https://github.com/dhenderson/datadocs">Datadocs</a>
+      </div>
     </div>
 </body>
 </html>

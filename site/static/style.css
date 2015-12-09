@@ -8,3 +8,5 @@ body{color: #253237;}
 a{color: #1985A1; text-decoration: none;}
 a:hover{text-decoration: underline;}
 a:visted{color: #1985A1}
+
+.footer{text-align: center; margin-top: 10px; border-top: 1px solid #EEE; padding-top: 10px;}

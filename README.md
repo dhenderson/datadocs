@@ -4,11 +4,9 @@ Datadocs automatically creates simple documentation for a set of datasets stored
 
 For each dataset, the number of rows and columns are calculated and presented, and each dataset variables are searchable with  a datatype and percent of observations with non-missing answers.
 
-
-
 ## Usage
 
-Store your `.csv` files in subdirectories in the `/data` directory, replacing `/data/test` with your own folder(s) and `.csv` files. 
+Store your `.csv` files in subdirectories in the `/data` directory, replacing `/data/test` with your own folder(s) and `.csv` files.
 
 To generate documentation, run:
 

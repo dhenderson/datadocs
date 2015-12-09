@@ -1,0 +1,13 @@
+title: "Test data"
+description: "This is a test dataset"
+datasets:
+  test.csv:
+    title: "Test"
+    categories:
+      - category: "General"
+        columns:
+          Birth state: "State the individual was born in"
+      - category: "Demographics"
+        columns:
+          Name: "This is the name of the person"
+          Age: "How old this person is"

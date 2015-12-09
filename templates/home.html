@@ -1,18 +1,35 @@
 {% extends "base.html" %}
-{% block title %}Home{% endblock %}
+{% block title %}{{docTitle}}{% endblock %}
 {% block content %}
-  <h1>Home</h1>
+  <h1>{{docTitle}}</h1>
+  {{docDescription}}
   <div class="row">
     <div class="col-md-12">
-      <ul>
+      <table class="table">
+        <tr>
+          <th>Name</th>
+          <th>Description</th>
+          <th>Datasets</th>
         {% for dataFolder in dataFolders %}
-          <li>
-            <a href="{{dataFolder.name}}/index.html">
-              {{dataFolder.name}}
-            </a>
-          </li>
+          <tr>
+            <td>
+              <a href="{{dataFolder.name}}/index.html">
+                {% if dataFolder.title %}
+                {{dataFolder.title}}
+                {% else %}
+                {{dataFolder.name}}
+                {% endif %}
+              </a>
+            </td>
+            <td>
+              {{dataFolder.description}}
+            </td>
+            <td>
+              {{ dataFolder.getNumberOfDatasets() }}
+            </td>
+          </tr>
         {% endfor %}
-      </ul>
+      </table>
     </div>
   </div>
 {% endblock %}
