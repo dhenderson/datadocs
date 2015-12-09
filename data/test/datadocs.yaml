@@ -1,8 +1,9 @@
-title: "Test data"
-description: "This is a test dataset"
+title: "Sample documentation"
+description: "This is sample documentation to show you how to use Datadocs for documenting your datasets."
 datasets:
   test.csv:
-    title: "Test"
+    title: "Test data"
+    description: "This is a test dataset"
     categories:
       - category: "General"
         columns:

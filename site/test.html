@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    
+    <link rel="stylesheet" href="static/bootstrap/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="static/bootstrap/css/bootstrap-theme.min.css" />
+    <link rel="stylesheet" href="static/bootstrap/css/bootstrap-social.css" />
+    <script src="static/jquery/jquery.js"></script>
+    <link rel="stylesheet" href="static/datatables/css/jquery.dataTables.css" />
+    <script src="static/datatables/js/jquery.dataTables.min.js"></script>
+    <link rel="stylesheet" href="static/style.css" />
+
+    <title>
+  
+    Test data
+  
+</title>
+    
+</head>
+<body>
+    <div class="header">
+      <div class="container" style="font-size: 1.3em;">
+        <a href="index.html">Sample documentation</a>
+        <!-- bread crumbs -->
+        
+          >
+            
+            Test data
+            
+        
+      </div>
+    </div>
+    <div class="subheader">
+      <div class="container">
+        
+
+  Test data
+
+
+      </div>
+    </div>
+    <div class="container">
+      <div class="content">
+        
+
+  <div class="row">
+    <div class="col-md-3">
+      <div id="toc">
+        <h2>Categories</h2>
+        <ul>
+        
+          <li>
+            <a href="#category-1">Demographics</a>
+          </li>
+        
+          <li>
+            <a href="#category-2">General</a>
+          </li>
+        
+        </ul>
+      </div>
+    </div>
+    <div class="col-md-9">
+      
+        <script type="text/javascript">
+          $(document).ready(function() {
+              $('#dataset-table-1').DataTable({
+                paging: false
+              });
+          } );
+        </script>
+        <h2 id="category-1">Demographics</h2>
+        <table class="table" id="dataset-table-1">
+          <thead>
+            <tr>
+              <th>Column</th>
+              <th>Description</th>
+              <th>Data type</th>
+              <th>Percent answerd</th>
+            </tr>
+          </thead>
+          <tbody>
+            
+            <tr>
+              <td>Name</td>
+              <td>This is the name of the person</td>
+              <td>Categorical</td>
+              <td>100.0</td>
+            </tr>
+            
+            <tr>
+              <td>Age</td>
+              <td>How old this person is</td>
+              <td>Numeric</td>
+              <td>100.0</td>
+            </tr>
+            
+          </tbody>
+        </table>
+      
+        <script type="text/javascript">
+          $(document).ready(function() {
+              $('#dataset-table-2').DataTable({
+                paging: false
+              });
+          } );
+        </script>
+        <h2 id="category-2">General</h2>
+        <table class="table" id="dataset-table-2">
+          <thead>
+            <tr>
+              <th>Column</th>
+              <th>Description</th>
+              <th>Data type</th>
+              <th>Percent answerd</th>
+            </tr>
+          </thead>
+          <tbody>
+            
+            <tr>
+              <td>Birth state</td>
+              <td>State the individual was born in</td>
+              <td>Categorical</td>
+              <td>100.0</td>
+            </tr>
+            
+          </tbody>
+        </table>
+      
+    </div>
+  </div>
+
+
+      </div>
+      <div class="footer">
+        Made with <a href="https://github.com/dhenderson/datadocs">Datadocs</a>
+      </div>
+    </div>
+</body>
+</html>

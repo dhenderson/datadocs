@@ -9,6 +9,7 @@
     <link rel="stylesheet" href="{{static}}/datatables/css/jquery.dataTables.css" />
     <script src="{{static}}/datatables/js/jquery.dataTables.min.js"></script>
     <link rel="stylesheet" href="{{static}}/style.css" />
+
     <title>{% block title %}{% endblock %}</title>
     {% endblock %}
 </head>
@@ -17,28 +18,19 @@
       <div class="container" style="font-size: 1.3em;">
         <a href="{{home}}">{{docTitle}}</a>
         <!-- bread crumbs -->
-        {% if dataFolder %}
+        {% if dataset %}
           >
-          {% if dataFolder.title %}
-            {{dataFolder.title}}
-          {% else %}
-            {{dataFolder.name}}
-          {% endif %}
-        {% elif dataset %}
-          > <a href="../{{dataset.dataFolder.name}}/index.html">
-            {% if dataset.dataFolder.title %}
-            {{dataset.dataFolder.title}}
-            {% else %}
-            {{dataset.dataFolder.name}}
-            {% endif %}
-          </a>
-          >
-          {% if dataset.title %}
+            {% if dataset.title %}
             {{dataset.title}}
-          {% else %}
+            {% else %}
             {{dataset.name}}
-          {% endif %}
+            {% endif %}
         {% endif %}
+      </div>
+    </div>
+    <div class="subheader">
+      <div class="container">
+        {% block subheader %}{% endblock %}
       </div>
     </div>
     <div class="container">

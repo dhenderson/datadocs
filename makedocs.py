@@ -4,38 +4,6 @@ from jinja2 import Environment, PackageLoader
 import yaml
 import os.path
 
-class DataFolder():
-    """
-    The data folder holds one or more datasets. The Data folder represents a
-    physical folder anywhere in the /data directory.
-
-    Args:
-        name        String name of the folder, such as "test"
-        datadocs    Dictionary contains data documentation for this folder as represented by a
-                    user generated yaml file. Defaults to None assuming no datadocs.yaml file
-                    is present.
-    """
-
-    def __init__(self, name, datadocs=None):
-        self.name = name
-        self.datasets = []
-        self.datadocs = datadocs
-        self.description = None
-        self.title = None
-
-        # get and set the title and description if they
-        # were specified by the user
-        if self.datadocs['description']:
-            self.description = datadocs['description']
-        if self.datadocs['title']:
-            self.title = datadocs['title']
-
-    def getNumberOfDatasets(self):
-        """
-        Counts and returns the number of datasets in this folder
-        """
-        return len(self.datasets)
-
 class Dataset():
     """
     A dataset is a csv file that is either in the root /data directory or housed in
@@ -50,11 +18,10 @@ class Dataset():
                         a category that holds a number of columns from this
                         dataset
     """
-    def __init__(self, name, pathToDataset, dataFolder, title=None):
+    def __init__(self, name, title=None, categories=None):
         self.name = name
-        self.pathToDataset = pathToDataset
         self.columns = []
-        self.dataFolder = dataFolder
+        #self.dataFolder = dataFolder
 
         # dimensions
         self.numberOfColumns = None
@@ -62,8 +29,11 @@ class Dataset():
 
         self.title = title
 
-        # set the columns
-        self.setColumns()
+        # categories as defined in yaml
+        self.categories = categories
+
+        # set the columns and return a map of column names and list of columns
+        self.columnsByCategory = self.setColumns()
 
     def setColumns(self):
 
@@ -78,7 +48,7 @@ class Dataset():
         }
 
         # read the data set as a csv and convert to a data frame
-        df = pd.read_csv(self.pathToDataset, sep=',', header=0, encoding='ISO-8859-1', index_col=None)
+        df = pd.read_csv("docs/" + self.name, sep=',', header=0, encoding='ISO-8859-1', index_col=None)
 
         # set dimensions
         self.numberOfRows = df.shape[0]
@@ -86,6 +56,7 @@ class Dataset():
 
         # get the names of the column headers
         columnNames = list(df.columns)
+        columnsByCategory = {}
 
         for columnName in columnNames:
 
@@ -110,14 +81,19 @@ class Dataset():
             Get category and description
             """
             description = ""
-            category = "Uncategorized"
+            category = "Uncategorized" # TODO unreachable?
 
             """
             Loop through each category and see if we can find the category
             that contains this column name. If we find it, set the category
             name and the description for this column
             """
-            for category in categories:
+            for category in self.categories:
+
+                # make a new category object
+                if category['category'] not in columnsByCategory:
+                    columnsByCategory[category['category']] = []
+
                 if columnName in category['columns']:
                     description = category['columns'][columnName]
                     if category['category']:
@@ -126,7 +102,10 @@ class Dataset():
                     column  = Column(columnName, dataType, percentNotNA, description, category)
                     #print("%s - %s is %s" % (self.name, columnName, dataType))
                     self.columns.append(column)
+                    columnsByCategory[category].append(column)
                     break
+
+        return columnsByCategory
 
     def getHtmlName(self):
         """
@@ -162,54 +141,38 @@ if __name__ == "__main__":
     Run through the /data folder making DataFolder and
     Dataset objects as needed.
     """
-    dataFolders = []
+    #dataFolders = []
     ignoredNames = [".DS_Store", "datadocs.yaml"]
 
     # get all subdirectories in the directory
     dirs = [d for d in os.listdir('docs') if os.path.isdir(os.path.join('docs', d))]
-    for folderName in dirs:
+    #for folderName in dirs:
 
-        # make sure this is not a osx folder
-        if folderName not in ignoredNames:
-            print(folderName)
+    datadocs = yaml.load(open("docs/datadocs.yaml", "r"))
 
-            # check if there is a datadocs.yaml file in this directory
-            datadocs = None
-            try:
-                datadocs = yaml.load(open("docs/" + folderName + "/datadocs.yaml", "r"))
-            except:
-                print("No datadocs.yaml file found in docs/%s" % folderName)
+    # create a list of datasets
+    datasets = []
 
-            # make a new Data folderName
-            dataFolder = DataFolder(folderName, datadocs)
+    for datasetName in os.listdir("docs"):
+        if datasetName not in ignoredNames:
+            if datasetName in datadocs['datasets']:
+                # construct the path to the dataset
+                pathToDataset = "docs/%s/" % datasetName
+                # create the dataaset
+                # TODO: handle nulls for title and categories
+                title = None
+                categories = None
 
-            # add this datafolder name to the /docs/ directory
-            if not os.path.exists('site/%s' % dataFolder.name):
-                os.makedirs('site/%s' % dataFolder.name)
+                if datadocs['datasets'][datasetName]['title']:
+                    title = datadocs['datasets'][datasetName]['title']
+                if datadocs['datasets'][datasetName]['categories']:
+                    categories = datadocs['datasets'][datasetName]['categories']
 
-            for datasetName in os.listdir("docs/" + folderName):
-                if datasetName not in ignoredNames:
+                # create the dataset object
+                dataset = Dataset(datasetName, title, categories)
 
-                    # construct the path to the dataset
-                    pathToDataset = "docs/%s/%s" % (folderName, datasetName)
-                    # create the dataaset
-                    # TODO: handle nulls for title and categories
-                    title = None
-                    categories = None
-
-                    if dataFolder.datadocs['datasets'][datasetName]['title']:
-                        title = dataFolder.datadocs['datasets'][datasetName]['title']
-                    if dataFolder.datadocs['datasets'][datasetName]['categories']:
-                        categories = dataFolder.datadocs['datasets'][datasetName]['categories']
-
-                    # create the dataset object
-                    dataset = Dataset(datasetName, pathToDataset, dataFolder, title)
-
-                    # add the dataset to the data folder
-                    dataFolder.datasets.append(dataset)
-
-            # add the data folder to the list of data folders
-            dataFolders.append(dataFolder)
+                # add the dataset to the data folder
+                datasets.append(dataset)
 
     """
     Render templates
@@ -231,19 +194,12 @@ if __name__ == "__main__":
     if homeDatadocs['description']:
         docDescription = homeDatadocs['description']
 
-    file.write(template.render(dataFolders=dataFolders, static="static", home="index.html", docTitle=docTitle, docDescription=docDescription))
+    file.write(template.render(datasets=datasets, static="static", home="index.html", docTitle=docTitle, docDescription=docDescription))
 
-    for dataFolder in dataFolders:
-        # render data folder template
-        template = env.get_template('datafolder.html')
-        file = open('site/%s/index.html' % dataFolder.name, 'w')
-        file.write(template.render(dataFolder=dataFolder, static="../static", home="../index.html", docTitle=docTitle))
-
-        for dataset in dataFolder.datasets:
-            # render data set template
-            template = env.get_template('dataset.html')
-            file = open('site/%s/%s' % (dataFolder.name, dataset.getHtmlName()), 'w')
-            file.write(template.render(dataset=dataset, static="../static", home="../index.html", docTitle=docTitle))
+    for dataset in datasets:
+        template = env.get_template('dataset.html')
+        file = open('site/%s' % (dataset.getHtmlName()), 'w')
+        file.write(template.render(dataset=dataset, static="static", home="index.html", docTitle=docTitle))
 
     # copy static folder (css and images)
     shutil.copytree("static", "site/static")

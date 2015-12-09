@@ -6,43 +6,59 @@
     {{dataset.name}}
   {% endif %}
 {% endblock %}
+{% block subheader %}
+{% if dataset.title %}
+  {{dataset.title}}
+{% else %}
+  {{dataset.name}}
+{% endif %}
+{% endblock %}
 {% block content %}
 
-  <script type="text/javascript">
-    $(document).ready(function() {
-        $('#dataset-table').DataTable();
-    } );
-  </script>
-
-  {% if dataset.title %}
-  <h1>{{dataset.title}}</h1>
-  {% else %}
-  <h1>{{dataset.name}}</h1>
-  {% endif %}
   <div class="row">
-    <div class="col-md-12">
-      <table class="table" id="dataset-table">
-        <thead>
-          <tr>
-            <th>Column</th>
-            <th>Category</th>
-            <th>Description</th>
-            <th>Data type</th>
-            <th>Percent answerd</th>
-          </tr>
-        </thead>
-        <tbody>
-          {% for column in dataset.columns %}
-          <tr>
-            <td>{{column.name}}</td>
-            <td>{{column.category}}</td>
-            <td>{{column.description}}</td>
-            <td>{{column.dataType}}</td>
-            <td>{{column.percentNotNA}}</td>
-          </tr>
-          {% endfor %}
-        </tbody>
-      </table>
+    <div class="col-md-3">
+      <div id="toc">
+        <h2>Categories</h2>
+        <ul>
+        {% for category in dataset.columnsByCategory %}
+          <li>
+            <a href="#category-{{loop.index}}">{{category}}</a>
+          </li>
+        {% endfor %}
+        </ul>
+      </div>
+    </div>
+    <div class="col-md-9">
+      {% for category in dataset.columnsByCategory %}
+        <script type="text/javascript">
+          $(document).ready(function() {
+              $('#dataset-table-{{loop.index}}').DataTable({
+                paging: false
+              });
+          } );
+        </script>
+        <h2 id="category-{{loop.index}}">{{category}}</h2>
+        <table class="table" id="dataset-table-{{loop.index}}">
+          <thead>
+            <tr>
+              <th>Column</th>
+              <th>Description</th>
+              <th>Data type</th>
+              <th>Percent answerd</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for column in dataset.columnsByCategory[category] %}
+            <tr>
+              <td>{{column.name}}</td>
+              <td>{{column.description}}</td>
+              <td>{{column.dataType}}</td>
+              <td>{{column.percentNotNA}}</td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      {% endfor %}
     </div>
   </div>
 
