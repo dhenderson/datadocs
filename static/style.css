@@ -43,7 +43,7 @@ a:visted{color: #428bca}
 
 /* sidebar */
 .bs-docs-sidebar {
-    padding-left: 20px;
+    padding-right: 20px;
     margin-top: 20px;
     margin-bottom: 20px;
 }
@@ -51,7 +51,7 @@ a:visted{color: #428bca}
 /* all links */
 .bs-docs-sidebar .nav>li>a {
     color: #999;
-    border-left: 2px solid transparent;
+    border-right: 2px solid transparent;
     padding: 4px 20px;
     font-size: 14px;
     font-weight: 400;
@@ -72,7 +72,7 @@ a:visted{color: #428bca}
     color: #428bca;
     text-decoration: none;
     background-color: transparent;
-    border-left-color: #428bca;
+    border-right-color: #428bca;
 }
 /* all active links */
 .bs-docs-sidebar .nav>.active>a,
