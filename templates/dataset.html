@@ -16,17 +16,14 @@
 {% block content %}
 
   <div class="row">
-    <div class="col-md-3">
-      <div id="toc">
-        <h2>Categories</h2>
-        <ul>
-        {% for category in dataset.columnsByCategory %}
-          <li>
-            <a href="#category-{{loop.index}}">{{category}}</a>
-          </li>
-        {% endfor %}
-        </ul>
-      </div>
+    <div class="col-md-3 bs-docs-sidebar">
+      <ul id="sidebar" class="nav nav-stacked fixed">
+      {% for category in dataset.columnsByCategory %}
+        <li>
+          <a href="#category-{{loop.index}}">{{category}} <span class="badge">{{dataset.columnsByCategory[category]|length}}</span></a>
+        </li>
+      {% endfor %}
+      </ul>
     </div>
     <div class="col-md-9">
       {% for category in dataset.columnsByCategory %}
@@ -53,7 +50,13 @@
               <td>{{column.name}}</td>
               <td>{{column.description}}</td>
               <td>{{column.dataType}}</td>
-              <td>{{column.percentNotNA}}</td>
+              <td>
+                <div class="progress">
+                  <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="{{column.percentNotNA}}" aria-valuemin="0" aria-valuemax="100" style="width: {{column.percentNotNA}}%; min-width: 2em;">
+                    {{column.percentNotNA}}%
+                  </div>
+                </div>
+              </td>
             </tr>
             {% endfor %}
           </tbody>
@@ -61,5 +64,12 @@
       {% endfor %}
     </div>
   </div>
+
+  <script type="text/javascript">
+  $('body').scrollspy({
+      target: '.bs-docs-sidebar',
+      offset: 40
+  });
+  </script>
 
 {% endblock %}

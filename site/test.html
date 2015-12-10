@@ -6,6 +6,7 @@
     <link rel="stylesheet" href="static/bootstrap/css/bootstrap-theme.min.css" />
     <link rel="stylesheet" href="static/bootstrap/css/bootstrap-social.css" />
     <script src="static/jquery/jquery.js"></script>
+    <script src="static/bootstrap/js/bootstrap.min.js"></script>
     <link rel="stylesheet" href="static/datatables/css/jquery.dataTables.css" />
     <script src="static/datatables/js/jquery.dataTables.min.js"></script>
     <link rel="stylesheet" href="static/style.css" />
@@ -17,7 +18,7 @@
 </title>
     
 </head>
-<body>
+<body data-spy="scroll" data-target="#toc">
     <div class="header">
       <div class="container" style="font-size: 1.3em;">
         <a href="index.html">Sample documentation</a>
@@ -44,21 +45,18 @@
         
 
   <div class="row">
-    <div class="col-md-3">
-      <div id="toc">
-        <h2>Categories</h2>
-        <ul>
-        
-          <li>
-            <a href="#category-1">Demographics</a>
-          </li>
-        
-          <li>
-            <a href="#category-2">General</a>
-          </li>
-        
-        </ul>
-      </div>
+    <div class="col-md-3 bs-docs-sidebar">
+      <ul id="sidebar" class="nav nav-stacked fixed">
+      
+        <li>
+          <a href="#category-1">General <span class="badge">1</span></a>
+        </li>
+      
+        <li>
+          <a href="#category-2">Demographics <span class="badge">2</span></a>
+        </li>
+      
+      </ul>
     </div>
     <div class="col-md-9">
       
@@ -69,44 +67,8 @@
               });
           } );
         </script>
-        <h2 id="category-1">Demographics</h2>
+        <h2 id="category-1">General</h2>
         <table class="table" id="dataset-table-1">
-          <thead>
-            <tr>
-              <th>Column</th>
-              <th>Description</th>
-              <th>Data type</th>
-              <th>Percent answerd</th>
-            </tr>
-          </thead>
-          <tbody>
-            
-            <tr>
-              <td>Name</td>
-              <td>This is the name of the person</td>
-              <td>Categorical</td>
-              <td>100.0</td>
-            </tr>
-            
-            <tr>
-              <td>Age</td>
-              <td>How old this person is</td>
-              <td>Numeric</td>
-              <td>100.0</td>
-            </tr>
-            
-          </tbody>
-        </table>
-      
-        <script type="text/javascript">
-          $(document).ready(function() {
-              $('#dataset-table-2').DataTable({
-                paging: false
-              });
-          } );
-        </script>
-        <h2 id="category-2">General</h2>
-        <table class="table" id="dataset-table-2">
           <thead>
             <tr>
               <th>Column</th>
@@ -121,7 +83,61 @@
               <td>Birth state</td>
               <td>State the individual was born in</td>
               <td>Categorical</td>
-              <td>100.0</td>
+              <td>
+                <div class="progress">
+                  <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="100.0" aria-valuemin="0" aria-valuemax="100" style="width: 100.0%; min-width: 2em;">
+                    100.0%
+                  </div>
+                </div>
+              </td>
+            </tr>
+            
+          </tbody>
+        </table>
+      
+        <script type="text/javascript">
+          $(document).ready(function() {
+              $('#dataset-table-2').DataTable({
+                paging: false
+              });
+          } );
+        </script>
+        <h2 id="category-2">Demographics</h2>
+        <table class="table" id="dataset-table-2">
+          <thead>
+            <tr>
+              <th>Column</th>
+              <th>Description</th>
+              <th>Data type</th>
+              <th>Percent answerd</th>
+            </tr>
+          </thead>
+          <tbody>
+            
+            <tr>
+              <td>Name</td>
+              <td>This is the name of the person</td>
+              <td>Categorical</td>
+              <td>
+                <div class="progress">
+                  <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="100.0" aria-valuemin="0" aria-valuemax="100" style="width: 100.0%; min-width: 2em;">
+                    100.0%
+                  </div>
+                </div>
+              </td>
+            </tr>
+            
+            <tr>
+              <td>Age</td>
+              <td>How old this person is</td>
+              <td>Numeric</td>
+              <td>
+                <div class="progress">
+                  <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="100.0" aria-valuemin="0" aria-valuemax="100" style="width: 100.0%; min-width: 2em;">
+                    100.0%
+                  </div>
+                </div>
+              </td>
             </tr>
             
           </tbody>
@@ -129,6 +145,13 @@
       
     </div>
   </div>
+
+  <script type="text/javascript">
+  $('body').scrollspy({
+      target: '.bs-docs-sidebar',
+      offset: 40
+  });
+  </script>
 
 
       </div>
