@@ -20,7 +20,7 @@
       <ul id="sidebar" class="nav nav-stacked fixed">
       {% for category in dataset.columnsByCategory %}
         <li>
-          <a href="#category-{{loop.index}}"><span class="badge">{{dataset.columnsByCategory[category]|length}}</span> {{category}}</a>
+          <a href="#category-{{loop.index}}">{{category}} <span class="badge">{{dataset.columnsByCategory[category]|length}}</span></a>
         </li>
       {% endfor %}
       </ul>
@@ -42,7 +42,9 @@
               <th>Column</th>
               <th>Description</th>
               <th>Data type</th>
+              {% if showPercentAnswered %}
               <th>Percent answerd</th>
+              {% endif %}
             </tr>
           </thead>
           <tbody>
@@ -51,6 +53,7 @@
               <td>{{column.name}}</td>
               <td>{{column.description}}</td>
               <td>{{column.dataType}}</td>
+              {% if showPercentAnswered %}
               <td>
                 <div class="progress">
                   <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="{{column.percentNotNA}}" aria-valuemin="0" aria-valuemax="100" style="width: {{column.percentNotNA}}%; min-width: 2em;">
@@ -58,6 +61,7 @@
                   </div>
                 </div>
               </td>
+              {% endif %}
             </tr>
             {% endfor %}
           </tbody>

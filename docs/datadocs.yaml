@@ -1,5 +1,7 @@
 title: "Sample documentation"
 description: "This is sample documentation to show you how to use Datadocs for documenting your datasets."
+show_percent_answered: true
+show_uncategorized: false
 datasets:
   test.csv:
     title: "Test data"

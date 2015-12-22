@@ -10,15 +10,16 @@ class Dataset():
     a DataFolder anywhere in /data.
 
     Args:
-        name            String full name of this dataset (such as "test.csv")
-        pathToDataset   Relative path to the dataset
-        dataFolder      DataFolder object this dataset is a member of
-        title           String human readable title
-        categories      List of dictionaries where each dictionary defines
-                        a category that holds a number of columns from this
-                        dataset
+        name                String full name of this dataset (such as "test.csv")
+        pathToDataset       Relative path to the dataset
+        dataFolder          DataFolder object this dataset is a member of
+        title               String human readable title
+        categories          List of dictionaries where each dictionary defines
+                            a category that holds a number of columns from this
+                            dataset
+        showUncategorized   Boolean indicating whether uncategorized columns should be shown in the documentation or not.
     """
-    def __init__(self, name, title=None, categories=None):
+    def __init__(self, name, title=None, categories=None, showUncategorized=False):
         self.name = name
         self.columns = []
         #self.dataFolder = dataFolder
@@ -26,6 +27,8 @@ class Dataset():
         # dimensions
         self.numberOfColumns = None
         self.numberOfRows = None
+
+        self.showUncategorized = showUncategorized
 
         self.title = title
 
@@ -77,11 +80,8 @@ class Dataset():
                 if numberOfUniqueAnswers < 20: # TODO: This is kind of a hack, might think of a better solution
                       dataType = dataTypeMap["categorical"]
 
-            """
-            Get category and description
-            """
-            description = ""
-            category = "Uncategorized" # TODO unreachable?
+            # track whether we categorized the column
+            columnCategorized = False
 
             """
             Loop through each category and see if we can find the category
@@ -103,7 +103,24 @@ class Dataset():
                     #print("%s - %s is %s" % (self.name, columnName, dataType))
                     self.columns.append(column)
                     columnsByCategory[category].append(column)
+                    columnCategorized = True
                     break
+            if not columnCategorized and self.showUncategorized == True:
+                """
+                this column is both uncategorized and the user wants us to
+                show uncategorized columns, so lets add this column to a new group
+                titled "uncategorized"
+                """
+
+                # make a new category object
+                if "Uncategorized" not in columnsByCategory:
+                    columnsByCategory["Uncategorized"] = []
+
+                # set the properties and add the column to the dataset
+                column  = Column(columnName, dataType, percentNotNA, description=None, category=category)
+                #print("%s - %s is %s" % (self.name, columnName, dataType))
+                self.columns.append("Uncategorized")
+                columnsByCategory["Uncategorized"].append(column)
 
         return columnsByCategory
 
@@ -149,6 +166,7 @@ if __name__ == "__main__":
     #for folderName in dirs:
 
     datadocs = yaml.load(open("docs/datadocs.yaml", "r"))
+    showUncategorized = datadocs['show_uncategorized']
 
     # create a list of datasets
     datasets = []
@@ -169,7 +187,7 @@ if __name__ == "__main__":
                     categories = datadocs['datasets'][datasetName]['categories']
 
                 # create the dataset object
-                dataset = Dataset(datasetName, title, categories)
+                dataset = Dataset(datasetName, title, categories, showUncategorized)
 
                 # add the dataset to the data folder
                 datasets.append(dataset)
@@ -187,19 +205,23 @@ if __name__ == "__main__":
     # documentation properties
     docTitle = None
     docDescription = None
+    showPercentAnswered = None
     # get the configuration file for the home page
     homeDatadocs = yaml.load(open("docs/datadocs.yaml", "r"))
     if homeDatadocs['title']:
         docTitle = homeDatadocs['title']
     if homeDatadocs['description']:
         docDescription = homeDatadocs['description']
+    if homeDatadocs['show_percent_answered']:
+        showPercentAnswered = homeDatadocs['show_percent_answered']
 
     file.write(template.render(datasets=datasets, static="static", home="index.html", docTitle=docTitle, docDescription=docDescription))
 
     for dataset in datasets:
         template = env.get_template('dataset.html')
         file = open('site/%s' % (dataset.getHtmlName()), 'w')
-        file.write(template.render(dataset=dataset, static="static", home="index.html", docTitle=docTitle))
+        file.write(template.render(dataset=dataset, static="static", home="index.html", docTitle=docTitle, showPercentAnswered=showPercentAnswered,
+            showUncategorized=showUncategorized))
 
     # copy static folder (css and images)
     shutil.copytree("static", "site/static")

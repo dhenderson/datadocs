@@ -1,6 +1,6 @@
-Name,Age,Birth state,Some weird column
-David,33,CA,0.196964298
-Ivonne,35,CA,0.310476927
-Brian,37,OR,0.392050153
-Josh,54,PA,0.861976731
-Lily,47,MA,0.284441728
+Name,Age,Birth state,Some weird column,An uncategorized variable
+David,33,CA,0.196964298,68
+Ivonne,35,CA,0.310476927,33
+Brian,37,OR,0.392050153,45
+Josh,54,PA,0.861976731,25
+Lily,47,MA,0.284441728,40
