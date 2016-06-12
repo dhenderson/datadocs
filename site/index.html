@@ -7,59 +7,220 @@
     <link rel="stylesheet" href="static/bootstrap/css/bootstrap-social.css" />
     <script src="static/jquery/jquery.js"></script>
     <script src="static/bootstrap/js/bootstrap.min.js"></script>
-    <link rel="stylesheet" href="static/datatables/css/jquery.dataTables.css" />
-    <script src="static/datatables/js/jquery.dataTables.min.js"></script>
+    <link rel="stylesheet" href="static/font-awesome/css/font-awesome.min.css">
+    <script src="static/lunr/lunr.min.js"></script>
+    <script src="static/underscore/underscore-min.js"></script>
     <link rel="stylesheet" href="static/style.css" />
-
-    <title>Sample documentation</title>
+    <title>Example Datadoc</title>
     
 </head>
-<body data-spy="scroll" data-target="#toc">
-    <div class="header">
-      <div class="container" style="font-size: 1.3em;">
-        <a href="index.html">Sample documentation</a>
-        <!-- bread crumbs -->
-        
-      </div>
-    </div>
-    <div class="subheader">
-      <div class="container">
-        Sample documentation
-      </div>
-    </div>
+<body>
+  <!-- Fixed navbar -->
+  <nav class="navbar navbar-default navbar-fixed-top">
     <div class="container">
-      <div class="content">
-        
-  <div class="description">This is sample documentation to show you how to use Datadocs for documenting your datasets.</div>
-  <div class="row">
-    <div class="col-md-12">
-      <table class="table">
-        <tr>
-          <th>Dataset</th>
-          <th>Rows</th>
-          <th>Columns</th>
-        </tr>
-        
-        <tr>
-          <td>
-            <a href="test.html">
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="index.html">Example Datadoc</a>
+      </div>
+      <div id="navbar" class="navbar-collapse collapse">
+        <ul class="nav navbar-nav">
+          <li class="dropdown">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Datasets <span class="caret"></span></a>
+            <ul class="dropdown-menu">
               
-              Test data
+                <li><a href="example.html">Example</a></li>
               
-            </a>
-          </td>
-          <td>5</td>
-          <td>5</td>
-        </tr>
-        
-      </table>
+            </ul>
+          </li>
+        </ul>
+        <div class="navbar-form navbar-right" role="search">
+          <div class="input-group">
+            <input type="input" id="search-nav" placeholder="&#xf002; Search datasets" class="form-control" style="font-family:Arial, FontAwesome;"/>
+          </div>
+        </div>
+      </div><!--/.nav-collapse -->
+    </div>
+  </nav>
+
+  <!-- search modal -->
+  <div class="modal fade" id="search-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+          <h4 class="modal-title" id="myModalLabel">Search</h4>
+        </div>
+        <div class="modal-body">
+          <div class="input-group" style="margin-bottom: 25px;">
+            <input type="input" id="search" placeholder="&#xf002; Search datasets" class="form-control" style="font-family:Arial, FontAwesome;"/>
+          </div>
+          <div class="content" id="search-results"></div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div>
+      </div>
     </div>
   </div>
 
-      </div>
-      <div class="footer">
-        Made with <a href="https://github.com/dhenderson/datadocs">Datadocs</a>
-      </div>
+  <script type="text/javascript">
+  // after clicking a category link in the TOC, close the modal
+  $("#search-nav").click(function(){
+    // open the search modal
+    $('#search-modal').modal('show');
+  });
+  // give focus to the search input once the modal is created
+  $('#search-modal').on('shown.bs.modal', function() {
+    $('#search').focus();
+  });
+  </script>
+
+  <div class="container">
+    <div class="content" id="main">
+      
+
+<div class="meta-container">
+  <div class="meta-title">Example Datadoc</div>
+</div>
+<div class="row">
+  <div class="col-md-12">
+    
+    <h1>Introduction</h1>
+<p>This is a sample implementation of <a href="https://github.com/dhenderson/datadocs">Datadocs</a>. Datadocs is a way to document your datasets, often called things like:</p>
+<ul>
+<li>Data documentation</li>
+<li>Data dictionary</li>
+<li>Code book</li>
+<li>etc.</li>
+</ul>
+<p>Whatever you call it, Datadocs is a way of documenting it.</p>
+<h1>Getting started with Datadocs</h1>
+<p>See the <code>README.md</code> file for detailed documentation for getting started. You should however clear out the contents of <code>/docs</code>, including this file, and put in your own documentation files. You should however get started by deleting the contents of this <code>index.md</code> file and writing your own documentation index page here.</p>
+    
+    <h1>Datasets</h1>
+    <table class="table">
+      <tr>
+        <th>Dataset</th>
+        <th>Description</th>
+        
+        <th>Fields</th>
+      </tr>
+      
+      <tr>
+        <td>
+          <a href="example.html">
+            
+            Example
+            
+          </a>
+        </td>
+        <td>Example dataset to get you started. This page documents a giberish dataset of five non-existant people and their preference for dogs and cake. You should delete this.</td>
+        
+        <td><span class="badge">8</span></td>
+      </tr>
+      
+    </table>
+  </div>
+</div>
+
     </div>
+    <div class="footer">
+      Made with <a href="https://github.com/dhenderson/datadocs">Datadocs</a>
+    </div>
+  </div>
 </body>
+<!-- search -->
+<script type="text/javascript">
+
+// don't allow the user to type in the nav bar search
+// box, it's only there for show
+$('#search-nav').keydown(function() {
+  return false;
+});
+
+var search = 
+  [{"dataset_link": "example.html", "dataset": "Example", "field_link": "example.html#field-1-1", "category": "Identifiers and demographics", "category_link": "example.html#category-1", "field": "ID", "description": "Unique identifier"}, {"dataset_link": "example.html", "dataset": "Example", "field_link": "example.html#field-1-2", "category": "Identifiers and demographics", "category_link": "example.html#category-1", "field": "First name", "description": "First name"}, {"dataset_link": "example.html", "dataset": "Example", "field_link": "example.html#field-1-3", "category": "Identifiers and demographics", "category_link": "example.html#category-1", "field": "Last name", "description": "Last name"}, {"dataset_link": "example.html", "dataset": "Example", "field_link": "example.html#field-1-4", "category": "Identifiers and demographics", "category_link": "example.html#category-1", "field": "Sex", "description": "Sex. Note this field is set to \"private\""}, {"dataset_link": "example.html", "dataset": "Example", "field_link": "example.html#field-1-5", "category": "Identifiers and demographics", "category_link": "example.html#category-1", "field": "Date of birth", "description": "Date the person was borned in form YYYY-MM-DD"}, {"dataset_link": "example.html", "dataset": "Example", "field_link": "example.html#field-2-1", "category": "Likes", "category_link": "example.html#category-2", "field": "Likes cake", "description": "Whether this person likes cake or not"}, {"dataset_link": "example.html", "dataset": "Example", "field_link": "example.html#field-2-2", "category": "Likes", "category_link": "example.html#category-2", "field": "Likes dogs", "description": "Whether this person likes dogs or not"}, {"dataset_link": "example.html", "dataset": "Example", "field_link": "example.html#field-2-3", "category": "Likes", "category_link": "example.html#category-2", "field": "is_male_likes_cake", "description": "Indicates whether this individual is both a male and likes cake. This is an example of a \"tranformed\" field."}]
+;
+// create the search index
+var index = lunr(function () {
+  this.field('field', {boost: 10});
+  this.field('description', {boost: 3});
+  this.field('category', {boost: 5});
+  this.field('dataset');
+  this.ref('field_link');
+});
+
+// add to the index
+$.each(search, function(i, el){
+  index.add({
+    'field_link': el['field_link'],
+    'field': el['field'],
+    'description': el['description'],
+    'category': el['category'],
+    'dataset': el['dataset']
+  });
+});
+
+$("#search").keyup(function(){
+  if($("#search").val() != ""){
+
+    // search result
+    var searchResults = index.search($("#search").val());
+
+
+    var displayResults = '<table class="table">';
+    displayResults += '<tr>';
+    displayResults += '<th>Field</th>';
+    displayResults += '<th>Category</th>';
+    displayResults += '<th>Dataset</th>';
+    displayResults += '</tr>';
+
+    // prepare the results to display
+    $.each(searchResults, function(i, result){
+
+      // get the field that matches this result
+      var field = _.findWhere(search, {"field_link" : result.ref});
+
+      displayResults += '<tr>';
+      displayResults += '<td><a href="' + field.field_link + '" class="result"><code>' + field.field + "</code></a></td>";
+      displayResults += '<td><a href="' + field.category_link + '" class="result">' + field.category + "</a></td>";
+      displayResults += '<td><a href="' + field.dataset_link + '" class="result">' + field.dataset + "</a></td>";
+      displayResults += '</tr>';
+    });
+
+    displayResults += "</table>";
+
+    // display the search result
+    $("#search-results").html(displayResults);
+
+    $("a.result").click(function(){
+      // when a search result is clicked, close the
+      // search modal
+      $("#search").val("");
+      $("#search-modal").modal("hide");
+    });
+  }
+  else{
+    $("#search-results").html("");
+  }
+});
+
+// internal link fix for fixed navbar
+function scrollToLocation(e){
+  // prevent default anchor click behavior
+  e.preventDefault();
+  // animate
+  $('html, body').animate({ scrollTop: $(this.hash).offset().top }, 300, function(){ });
+}
+
+// avoid being obscured by the fixed nabvar
+$(".scroll-to-location").on('click', scrollToLocation);
+
+
+</script>
 </html>

@@ -1,0 +1,6 @@
+ID,First name,Last name,Date of Birth,Likes cake,Likes dogs,Sex,is_male_likes_cake
+1,Ingvar,Barnaby,5/4/82,FALSE,TRUE,Male,FALSE
+2,Kam,Lany,12/1/94,TRUE,FALSE,Male,TRUE
+3,Merle,Filomena,4/15/70,TRUE,FALSE,Female,FALSE
+4,Nelle,Merlyn,10/1/54,FALSE,TRUE,Female,FALSE
+5,Torben,Yong,11/6/89,TRUE,TRUE,Male,TRUE

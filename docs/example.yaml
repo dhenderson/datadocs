@@ -1,0 +1,32 @@
+title: "Example"  # name of the dataset
+description: "Example dataset to get you started. This page documents a giberish dataset of five non-existant people and their preference for dogs and cake. You should delete this." # description of the dataset
+categories: # list of categories to place your fields in
+  - title: "Identifiers and demographics" # title of a category
+    description: "Unique ID's and basic demographics for each individual in the dataset." # category description
+    fields: # list of fields in this category
+      - name: "ID" # name of field in the corresponding csv file
+        description: "Unique identifier" # field description
+      - name: "First name"
+        description: "First name"
+      - name: "Last name"
+        description: "Last name"
+      - name: "Sex"
+        description: 'Sex. Note this field is set to "private"'
+        private: true # whether the field is private or not
+      - name: "Date of birth"
+        description: "Date the person was borned in form YYYY-MM-DD"
+        type: "Date" # field data type
+  - title: "Likes"
+    description: "Things this person likes."
+    fields:
+      - name: "Likes cake"
+        description: "Whether this person likes cake or not"
+        type: "Boolean"
+      - name: "Likes dogs"
+        description: "Whether this person likes dogs or not"
+        type: "Boolean"
+      - name: "is_male_likes_cake"
+        description: 'Indicates whether this individual is both a male and likes cake. This is an example of a "tranformed" field.'
+        type: "Boolean"
+        transformed: true # whether the field is transformed or not
+        

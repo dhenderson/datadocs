@@ -7,40 +7,173 @@
     <link rel="stylesheet" href="{{static}}/bootstrap/css/bootstrap-social.css" />
     <script src="{{static}}/jquery/jquery.js"></script>
     <script src="{{static}}/bootstrap/js/bootstrap.min.js"></script>
-    <link rel="stylesheet" href="{{static}}/datatables/css/jquery.dataTables.css" />
-    <script src="{{static}}/datatables/js/jquery.dataTables.min.js"></script>
+    <link rel="stylesheet" href="{{static}}/font-awesome/css/font-awesome.min.css">
+    <script src="{{static}}/lunr/lunr.min.js"></script>
+    <script src="{{static}}/underscore/underscore-min.js"></script>
     <link rel="stylesheet" href="{{static}}/style.css" />
-
     <title>{% block title %}{% endblock %}</title>
     {% endblock %}
 </head>
-<body data-spy="scroll" data-target="#toc">
-    <div class="header">
-      <div class="container" style="font-size: 1.3em;">
-        <a href="{{home}}">{{docTitle}}</a>
-        <!-- bread crumbs -->
-        {% if dataset %}
-          >
-            {% if dataset.title %}
-            {{dataset.title}}
-            {% else %}
-            {{dataset.name}}
-            {% endif %}
-        {% endif %}
-      </div>
-    </div>
-    <div class="subheader">
-      <div class="container">
-        {% block subheader %}{% endblock %}
-      </div>
-    </div>
+<body>
+  <!-- Fixed navbar -->
+  <nav class="navbar navbar-default navbar-fixed-top">
     <div class="container">
-      <div class="content">
-        {% block content %}{% endblock %}
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="{{home}}">{{docTitle}}</a>
       </div>
-      <div class="footer">
-        Made with <a href="https://github.com/dhenderson/datadocs">Datadocs</a>
+      <div id="navbar" class="navbar-collapse collapse">
+        <ul class="nav navbar-nav">
+          <li class="dropdown">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Datasets <span class="caret"></span></a>
+            <ul class="dropdown-menu">
+              {% for dataset in datasets %}
+                <li><a href="{{dataset.getHtmlName()}}">{{dataset.title}}</a></li>
+              {% endfor %}
+            </ul>
+          </li>
+        </ul>
+        <div class="navbar-form navbar-right" role="search">
+          <div class="input-group">
+            <input type="input" id="search-nav" placeholder="&#xf002; Search datasets" class="form-control" style="font-family:Arial, FontAwesome;"/>
+          </div>
+        </div>
+      </div><!--/.nav-collapse -->
+    </div>
+  </nav>
+
+  <!-- search modal -->
+  <div class="modal fade" id="search-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+          <h4 class="modal-title" id="myModalLabel">Search</h4>
+        </div>
+        <div class="modal-body">
+          <div class="input-group" style="margin-bottom: 25px;">
+            <input type="input" id="search" placeholder="&#xf002; Search datasets" class="form-control" style="font-family:Arial, FontAwesome;"/>
+          </div>
+          <div class="content" id="search-results"></div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div>
       </div>
     </div>
+  </div>
+
+  <script type="text/javascript">
+  // after clicking a category link in the TOC, close the modal
+  $("#search-nav").click(function(){
+    // open the search modal
+    $('#search-modal').modal('show');
+  });
+  // give focus to the search input once the modal is created
+  $('#search-modal').on('shown.bs.modal', function() {
+    $('#search').focus();
+  });
+  </script>
+
+  <div class="container">
+    <div class="content" id="main">
+      {% block content %}{% endblock %}
+    </div>
+    <div class="footer">
+      Made with <a href="https://github.com/dhenderson/datadocs">Datadocs</a>
+    </div>
+  </div>
 </body>
+<!-- search -->
+<script type="text/javascript">
+
+// don't allow the user to type in the nav bar search
+// box, it's only there for show
+$('#search-nav').keydown(function() {
+  return false;
+});
+
+var search = {% block search %}{% endblock %};
+// create the search index
+var index = lunr(function () {
+  this.field('field', {boost: 10});
+  this.field('description', {boost: 3});
+  this.field('category', {boost: 5});
+  this.field('dataset');
+  this.ref('field_link');
+});
+
+// add to the index
+$.each(search, function(i, el){
+  index.add({
+    'field_link': el['field_link'],
+    'field': el['field'],
+    'description': el['description'],
+    'category': el['category'],
+    'dataset': el['dataset']
+  });
+});
+
+$("#search").keyup(function(){
+  if($("#search").val() != ""){
+
+    // search result
+    var searchResults = index.search($("#search").val());
+
+
+    var displayResults = '<table class="table">';
+    displayResults += '<tr>';
+    displayResults += '<th>Field</th>';
+    displayResults += '<th>Category</th>';
+    displayResults += '<th>Dataset</th>';
+    displayResults += '</tr>';
+
+    // prepare the results to display
+    $.each(searchResults, function(i, result){
+
+      // get the field that matches this result
+      var field = _.findWhere(search, {"field_link" : result.ref});
+
+      displayResults += '<tr>';
+      displayResults += '<td><a href="' + field.field_link + '" class="result"><code>' + field.field + "</code></a></td>";
+      displayResults += '<td><a href="' + field.category_link + '" class="result">' + field.category + "</a></td>";
+      displayResults += '<td><a href="' + field.dataset_link + '" class="result">' + field.dataset + "</a></td>";
+      displayResults += '</tr>';
+    });
+
+    displayResults += "</table>";
+
+    // display the search result
+    $("#search-results").html(displayResults);
+
+    $("a.result").click(function(){
+      // when a search result is clicked, close the
+      // search modal
+      $("#search").val("");
+      $("#search-modal").modal("hide");
+    });
+  }
+  else{
+    $("#search-results").html("");
+  }
+});
+
+// internal link fix for fixed navbar
+function scrollToLocation(e){
+  // prevent default anchor click behavior
+  e.preventDefault();
+  // animate
+  $('html, body').animate({ scrollTop: $(this.hash).offset().top }, 300, function(){ });
+}
+
+// avoid being obscured by the fixed nabvar
+$(".scroll-to-location").on('click', scrollToLocation);
+
+
+</script>
 </html>

@@ -1,97 +1,84 @@
-body{background-color: #FFF;}
-.header{
-  background-color: #EEE;
-  padding: 10px 15px;
-  font-size: 0.8em;
-}
-.header, .header a{color: #777;}
-.subheader{
-  background-color: #FAFAFA;
-  padding: 20px 15px;
-  margin-bottom: 20px;
-  font-size: 2em;
-  color: #555;
-  border-bottom: 1px solid #DDD;
-  border-top: 1px solid #DDD;
+body {
+  background-color: #FFF;
+  padding-top: 75px;
 }
 
-a{color: #428bca; text-decoration: none;}
+a{color: #1976D2; text-decoration: none;}
 a:hover{text-decoration: underline;}
-a:visted{color: #428bca}
+a:visted{color: #1976D2}
 
-.description{font-size: 1.5; color: #777; margin-bottom: 20px;}
+section {
+  padding-top: 75px;
+  margin-top: -75px;
+}
+
+.navbar-default {
+    background-color: #1E88E5;
+    border-bottom: 1px solid #1976D2;
+    background-image: none;
+    background-repeat: no-repeat;
+    text-shadow: none;
+}
+
+/* title */
+.navbar-default .navbar-brand {
+    color: #FFF;
+    text-shadow: none;
+}
+.navbar-default .navbar-brand:hover,
+.navbar-default .navbar-brand:focus {
+    color: #FFF;
+    text-shadow: none;
+}
+
+/* link */
+.navbar-default .navbar-nav > li > a {
+    color: #FFF;
+    text-shadow: none;
+}
+.navbar-default .navbar-nav > li > a:hover,
+.navbar-default .navbar-nav > li > a:focus {
+    color: #FFF;
+    text-shadow: none;
+}
+.navbar-default .navbar-nav > .active > a,
+.navbar-default .navbar-nav > .active > a:hover,
+.navbar-default .navbar-nav > .active > a:focus {
+    color: #555;
+    background-color: #E7E7E7;
+    text-shadow: none;
+}
+.navbar-default .navbar-nav > .open > a,
+.navbar-default .navbar-nav > .open > a:hover,
+.navbar-default .navbar-nav > .open > a:focus {
+    color: #FFF;
+    background-color: #1976D2;
+    text-shadow: none;
+}
+
+@media only screen and (max-width: 766px) {
+.collapsing, .in {background-color: #1E88E5;}
+.collapsing ul li a, .in ul li a {color: #FFF!important;}
+.collapsing ul li a:hover, .in ul li a:hover {color: #fff!important;}
+}
+
+.logo{max-width: 300px; max-height: 40px;}
+
+.meta-container{max-width: 650px; max-width: 600px; margin: 0px auto;}
+.meta-title{font-size: 3em; font-weight: bold; margin-bottom: 25px; text-align: center;}
+.meta-description{font-size: 1.5em; margin-bottom: 25px; text-align: center;}
+.toc{background-color: #EEE;}
+
+.category-description{font-size: 1em; color: #555;}
+.category-title{font-size: 1.5em; margin-bottom: 15px; margin-top: 0px; font-weight: bold;}
+.category-container{margin-top: 25px; border-top: 0px dashed #CCC; padding-top: 25px;}
+
+code{
+  padding:2px 4px;font-size:90%; color: #c7254e;
+  white-space:nowrap; background-color:#f9f2f4; border-radius:4px;
+}
 
 .table th{background-color: #F5F5F5;}
 .table {border: 1px solid #CCC;}
 
-.footer{text-align: center; margin-top: 10px; border-top: 1px solid #EEE; padding-top: 10px;}
-
-/** table of contents **/
-.group {
-    background: yellow;
-    width: 200px;
-    height: 500px;
-}
-.group .subgroup {
-    background: orange;
-    width: 150px;
-    height: 200px;
-}
-.fixed {
-    position: fixed;
-}
-
-/* sidebar */
-.bs-docs-sidebar {
-    padding-right: 20px;
-    margin-top: 20px;
-    margin-bottom: 20px;
-}
-
-/* all links */
-.bs-docs-sidebar .nav>li>a {
-    color: #999;
-    border-right: 2px solid transparent;
-    padding: 4px 20px;
-    font-size: 14px;
-    font-weight: 400;
-}
-
-/* nested links */
-.bs-docs-sidebar .nav .nav>li>a {
-    padding-top: 1px;
-    padding-bottom: 1px;
-    padding-left: 30px;
-    font-size: 12px;
-}
-
-/* active & hover links */
-.bs-docs-sidebar .nav>.active>a,
-.bs-docs-sidebar .nav>li>a:hover,
-.bs-docs-sidebar .nav>li>a:focus {
-    color: #428bca;
-    text-decoration: none;
-    background-color: transparent;
-    border-right-color: #428bca;
-}
-/* all active links */
-.bs-docs-sidebar .nav>.active>a,
-.bs-docs-sidebar .nav>.active:hover>a,
-.bs-docs-sidebar .nav>.active:focus>a {
-    font-weight: 700;
-}
-/* nested active links */
-.bs-docs-sidebar .nav .nav>.active>a,
-.bs-docs-sidebar .nav .nav>.active:hover>a,
-.bs-docs-sidebar .nav .nav>.active:focus>a {
-    font-weight: 500;
-}
-
-/* hide inactive nested list */
-.bs-docs-sidebar .nav ul.nav {
-    display: none;
-}
-/* show active nested list */
-.bs-docs-sidebar .nav>.active>ul.nav {
-    display: block;
-}
+.footer{text-align: center; margin-top: 10px; padding-top: 10px;}

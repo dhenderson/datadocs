@@ -1,16 +1,6 @@
-title: "Sample documentation"
-description: "This is sample documentation to show you how to use Datadocs for documenting your datasets."
-show_percent_answered: true
-show_uncategorized: false
+title: "Example Datadoc" # title for the documentation overall
+show_uncategorized: false # whether to show fields you have not provided documentation for
+show_percent_answered: false # whether to show the percent of fields that are not null
+show_private: true # whether to show fields designated private or not
 datasets:
-  test.csv:
-    title: "Test data"
-    description: "This is a test dataset"
-    categories:
-      - category: "General"
-        columns:
-          Birth state: "State the individual was born in"
-      - category: "Demographics"
-        columns:
-          Name: "This is the name of the person"
-          Age: "How old this person is"
+  - name: "example"

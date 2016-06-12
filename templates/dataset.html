@@ -6,75 +6,128 @@
     {{dataset.name}}
   {% endif %}
 {% endblock %}
-{% block subheader %}
-{% if dataset.title %}
-  {{dataset.title}}
-{% else %}
-  {{dataset.name}}
-{% endif %}
+{% block search %}
+  {{search}}
+{% endblock %}
+{% block datasets %}
+  {{datasets}}
 {% endblock %}
 {% block content %}
 
-  <div class="row">
-    <div class="col-md-3 bs-docs-sidebar">
-      <ul id="sidebar" class="nav nav-stacked fixed">
-      {% for category in dataset.columnsByCategory %}
-        <li>
-          <a href="#category-{{loop.index}}">{{category}} <span class="badge">{{dataset.columnsByCategory[category]|length}}</span></a>
-        </li>
-      {% endfor %}
-      </ul>
-    </div>
-    <div class="col-md-9">
-      {% for category in dataset.columnsByCategory %}
-        <script type="text/javascript">
-          $(document).ready(function() {
-              $('#dataset-table-{{loop.index}}').DataTable({
-                "paging": false,
-                "order": [[ 3, "desc" ]]
-              });
-          } );
-        </script>
-        <h2 id="category-{{loop.index}}">{{category}}</h2>
-        <table class="table" id="dataset-table-{{loop.index}}">
-          <thead>
-            <tr>
-              <th>Column</th>
-              <th>Description</th>
-              <th>Data type</th>
-              {% if showPercentAnswered %}
-              <th>Percent answerd</th>
-              {% endif %}
-            </tr>
-          </thead>
-          <tbody>
-            {% for column in dataset.columnsByCategory[category] %}
-            <tr>
-              <td>{{column.name}}</td>
-              <td>{{column.description}}</td>
-              <td>{{column.dataType}}</td>
-              {% if showPercentAnswered %}
-              <td>
-                <div class="progress">
-                  <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="{{column.percentNotNA}}" aria-valuemin="0" aria-valuemax="100" style="width: {{column.percentNotNA}}%; min-width: 2em;">
-                    {{column.percentNotNA}}%
-                  </div>
-                </div>
-              </td>
-              {% endif %}
-            </tr>
-            {% endfor %}
-          </tbody>
-        </table>
-      {% endfor %}
+<div class="meta-container">
+  <div class="meta-title">
+    {{dataset.title}}
+    <div style="text-align: center;">
+      <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#toc">
+        Table of contents
+      </button>
     </div>
   </div>
+  <div class="meta-description">{{dataset.description}}</div>
+</div>
 
-  <script type="text/javascript">
-  $('body').scrollspy({
-      target: '.bs-docs-sidebar',
-      offset: 40
-  });
-  </script>
+<!-- optional markdown content -->
+{% if content %}
+{{content|safe}}
+{% endif %}
+
+<!-- table of contents -->
+<div class="modal fade" id="toc" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel">Table of contents</h4>
+      </div>
+      <div class="modal-body">
+        {% for category in dataset.categories %}
+          <h3>
+            <a href="#category-{{loop.index}}" class="toc-link scroll-to-location">{{category.title}}</a>
+            <span class="badge">{{category.fields|length}}</span>
+          </h3>
+          <p style="margin-left: 10px;">{{category.description}}</p>
+        {% endfor %}
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script type="text/javascript">
+// after clicking a category link in the TOC, close the modal
+$("a.toc-link").click(function(){
+  $('#toc').modal('hide')
+});
+</script>
+
+{% for category in dataset.categories %}
+{% set category_loop = loop %}
+<div class="row category-container">
+  <div class="col-md-3">
+    <section id="category-{{category_loop.index}}">
+      <div class="category-title">{{category.title}}</div>
+      <p class="category-description">{{category.description}}</p>
+    </section>
+  </div>
+  <div class="col-md-9">
+    <table class="table">
+      <thead>
+        <tr>
+          <th></th>
+          <th>Field</th>
+          <th>Description</th>
+          <th>Type</th>
+          {% if showPercentAnswered %}
+          <th>Percent answerd</th>
+          {% endif %}
+        </tr>
+      </thead>
+      <tbody>
+        {% for field in category.fields %}
+        <tr class="field">
+          <td>
+            <section id="field-{{category_loop.index}}-{{loop.index}}">
+              {% if field.private %} <i class="fa fa-lock" title="Field is private"></i>{% endif %}
+              {% if field.transformed %} <i class="fa fa-edit" title="Field is transformed or calculated"></i>{% endif %}
+            </section>
+          </td>
+          <td>
+            <code>{{field.name}}</code>
+          </td>
+          <td>{{field.description}}</td>
+          <td>
+            {% if field.dataType == "Boolean" %}
+              <i class="fa fa-toggle-off" title="Boolean"></i>
+            {% elif field.dataType == "Date" %}
+              <i class="fa fa-calendar" title="Date"></i>
+            {% elif field.dataType == "Text" %}
+              <i class="fa fa-paragraph" title="Text"></i>
+            {% elif field.dataType == "Categorical" %}
+              <i class="fa fa-list-ul" title="Text"></i>
+            {% elif field.dataType == "Numeric" %}
+              <i class="fa fa-hashtag" title="Numeric"></i>
+            {% elif field.dataType == "JSON" or field.dataType == "YAML" %}
+              <i class="fa fa-code" title="Code"></i>
+            {% endif %}
+              {{field.dataType}}
+          </td>
+          {% if showPercentAnswered %}
+          <td>
+            <div class="progress">
+              <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="{{field.percentNotNA}}" aria-valuemin="0" aria-valuemax="100" style="width: {{field.percentNotNA}}%; min-width: 2em;">
+                {{field.percentNotNA}}%
+              </div>
+            </div>
+          </td>
+          {% endif %}
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+{% endfor %}
 
 {% endblock %}

@@ -1,32 +1,51 @@
 {% extends "base.html" %}
 {% block title %}{{docTitle}}{% endblock %}
 {% block subheader %}{{docTitle}}{% endblock %}
+{% block search %}
+  {{search}}
+{% endblock %}
+{% block datasets %}
+  {{datasets}}
+{% endblock %}
 {% block content %}
-  <div class="description">{{docDescription}}</div>
-  <div class="row">
-    <div class="col-md-12">
-      <table class="table">
-        <tr>
-          <th>Dataset</th>
-          <th>Rows</th>
-          <th>Columns</th>
-        </tr>
-        {% for dataset in datasets %}
-        <tr>
-          <td>
-            <a href="{{dataset.getHtmlName()}}">
-              {% if dataset.title %}
-              {{dataset.title}}
-              {% else %}
-              {{dataset.name}}
-              {% endif %}
-            </a>
-          </td>
-          <td>{{dataset.numberOfRows}}</td>
-          <td>{{dataset.numberOfColumns}}</td>
-        </tr>
-        {% endfor %}
-      </table>
-    </div>
+
+<div class="meta-container">
+  <div class="meta-title">{{docTitle}}</div>
+</div>
+<div class="row">
+  <div class="col-md-12">
+    {% if content %}
+    {{content|safe}}
+    {% endif %}
+    <h1>Datasets</h1>
+    <table class="table">
+      <tr>
+        <th>Dataset</th>
+        <th>Description</th>
+        {% if showPercentAnswered%}
+        <th>Rows</th>
+        {% endif %}
+        <th>Fields</th>
+      </tr>
+      {% for dataset in datasets %}
+      <tr>
+        <td>
+          <a href="{{dataset.getHtmlName()}}">
+            {% if dataset.title %}
+            {{dataset.title}}
+            {% else %}
+            {{dataset.name}}
+            {% endif %}
+          </a>
+        </td>
+        <td>{{dataset.description}}</td>
+        {% if showPercentAnswered%}
+        <td>{{dataset.numberOfRows}}</td>
+        {% endif %}
+        <td><span class="badge">{{dataset.countFields()}}</span></td>
+      </tr>
+      {% endfor %}
+    </table>
   </div>
+</div>
 {% endblock %}
