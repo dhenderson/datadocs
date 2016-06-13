@@ -11,7 +11,11 @@
     <script src="static/lunr/lunr.min.js"></script>
     <script src="static/underscore/underscore-min.js"></script>
     <link rel="stylesheet" href="static/style.css" />
-    <title>Example Datadoc</title>
+    <title>
+  
+    Example
+  
+</title>
     
 </head>
 <body>
@@ -85,48 +89,278 @@
       
 
 <div class="meta-container">
-  <div class="meta-title">Example Datadoc</div>
+  <div class="meta-title">
+    Example
+    <div style="text-align: center;">
+      <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#toc">
+        Table of contents
+      </button>
+    </div>
+  </div>
+  <div class="meta-description">Example dataset to get you started. This page documents a giberish dataset of five non-existant people and their preference for dogs and cake. You should delete this.</div>
 </div>
-<div class="row">
-  <div class="col-md-12">
-    
-    <h1>Introduction</h1>
-<p>This is a sample implementation of <a href="https://github.com/dhenderson/datadocs">Datadocs</a>. Datadocs is a way to document your datasets, often called things like:</p>
-<ul>
-<li>Data documentation</li>
-<li>Data dictionary</li>
-<li>Code book</li>
-<li>etc.</li>
-</ul>
-<p>Whatever you call it, Datadocs is a way of documenting it.</p>
-<h1>Getting started with Datadocs</h1>
-<p>See the <code>README.md</code> file for detailed documentation for getting started. You should however clear out the contents of <code>/docs</code>, including this file, and put in your own documentation files. You should however get started by deleting the contents of this <code>index.md</code> file and writing your own documentation index page here.</p>
-    
-    <h1>Datasets</h1>
+
+<!-- optional markdown content -->
+
+<p>This page provides documentation for some nonsense data. A few things to note in the <code>docs/example.yaml</code> file which defines the dataset features on this page:</p>
+<ol>
+<li><strong>Datatype guesses</strong> - Datadocs attempts to guess the datatype of each filed by reading the provided <code>.csv</code> file. If you want to ensure the proper datatypes is included, you can use the 'type' key when defining a field.</li>
+<li><strong>Private fields</strong> - The field <code>sex</code> is set to <code>private</code>. A private field is noted with a lock icon, and signals to the reader that while the field exists, it may not be available to be shared with others.</li>
+<li><strong>Transformed fields</strong> - The <code>is_male_likes_cake</code> is set to <code>transformed</code>. Transformation means the datapoint has some how been constructed. For example, in this case <code>is_male_likes_cake</code> is determined based on answers to the <code>Sex</code> and <code>Likes cake</code> fields. Transformed fields are noted by an "edit" icon.</li>
+</ol>
+
+
+<!-- table of contents -->
+<div class="modal fade" id="toc" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel">Table of contents</h4>
+      </div>
+      <div class="modal-body">
+        
+          <h3>
+            <a href="#category-1" class="toc-link scroll-to-location">Identifiers and demographics</a>
+            <span class="badge">5</span>
+          </h3>
+          <p style="margin-left: 10px;">Unique ID's and basic demographics for each individual in the dataset.</p>
+        
+          <h3>
+            <a href="#category-2" class="toc-link scroll-to-location">Likes</a>
+            <span class="badge">3</span>
+          </h3>
+          <p style="margin-left: 10px;">Things this person likes.</p>
+        
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script type="text/javascript">
+// after clicking a category link in the TOC, close the modal
+$("a.toc-link").click(function(){
+  $('#toc').modal('hide')
+});
+</script>
+
+
+
+<div class="row category-container">
+  <div class="col-md-3">
+    <section id="category-1">
+      <div class="category-title">Identifiers and demographics</div>
+      <p class="category-description">Unique ID's and basic demographics for each individual in the dataset.</p>
+    </section>
+  </div>
+  <div class="col-md-9">
     <table class="table">
-      <tr>
-        <th>Dataset</th>
-        <th>Description</th>
+      <thead>
+        <tr>
+          <th></th>
+          <th>Field</th>
+          <th>Description</th>
+          <th>Type</th>
+          
+        </tr>
+      </thead>
+      <tbody>
         
-        <th>Fields</th>
-      </tr>
-      
-      <tr>
-        <td>
-          <a href="example.html">
+        <tr class="field">
+          <td>
+            <section id="field-1-1">
+              
+              
+            </section>
+          </td>
+          <td>
+            <code>ID</code>
+          </td>
+          <td>Unique identifier</td>
+          <td>
             
-            Example
+              <i class="fa fa-hashtag" title="Numeric"></i>
             
-          </a>
-        </td>
-        <td>Example dataset to get you started. This page documents a giberish dataset of five non-existant people and their preference for dogs and cake. You should delete this.</td>
+              Numeric
+          </td>
+          
+        </tr>
         
-        <td><span class="badge">8</span></td>
-      </tr>
-      
+        <tr class="field">
+          <td>
+            <section id="field-1-2">
+              
+              
+            </section>
+          </td>
+          <td>
+            <code>First name</code>
+          </td>
+          <td>First name</td>
+          <td>
+            
+              <i class="fa fa-list-ul" title="Text"></i>
+            
+              Categorical
+          </td>
+          
+        </tr>
+        
+        <tr class="field">
+          <td>
+            <section id="field-1-3">
+              
+              
+            </section>
+          </td>
+          <td>
+            <code>Last name</code>
+          </td>
+          <td>Last name</td>
+          <td>
+            
+              <i class="fa fa-list-ul" title="Text"></i>
+            
+              Categorical
+          </td>
+          
+        </tr>
+        
+        <tr class="field">
+          <td>
+            <section id="field-1-4">
+               <i class="fa fa-lock" title="Field is private"></i>
+              
+            </section>
+          </td>
+          <td>
+            <code>Sex</code>
+          </td>
+          <td>Sex. Note this field is set to "private"</td>
+          <td>
+            
+              <i class="fa fa-list-ul" title="Text"></i>
+            
+              Categorical
+          </td>
+          
+        </tr>
+        
+        <tr class="field">
+          <td>
+            <section id="field-1-5">
+              
+              
+            </section>
+          </td>
+          <td>
+            <code>Date of birth</code>
+          </td>
+          <td>Date the person was borned in form YYYY-MM-DD</td>
+          <td>
+            
+              <i class="fa fa-calendar" title="Date"></i>
+            
+              Date
+          </td>
+          
+        </tr>
+        
+      </tbody>
     </table>
   </div>
 </div>
+
+
+<div class="row category-container">
+  <div class="col-md-3">
+    <section id="category-2">
+      <div class="category-title">Likes</div>
+      <p class="category-description">Things this person likes.</p>
+    </section>
+  </div>
+  <div class="col-md-9">
+    <table class="table">
+      <thead>
+        <tr>
+          <th></th>
+          <th>Field</th>
+          <th>Description</th>
+          <th>Type</th>
+          
+        </tr>
+      </thead>
+      <tbody>
+        
+        <tr class="field">
+          <td>
+            <section id="field-2-1">
+              
+              
+            </section>
+          </td>
+          <td>
+            <code>Likes cake</code>
+          </td>
+          <td>Whether this person likes cake or not</td>
+          <td>
+            
+              <i class="fa fa-toggle-off" title="Boolean"></i>
+            
+              Boolean
+          </td>
+          
+        </tr>
+        
+        <tr class="field">
+          <td>
+            <section id="field-2-2">
+              
+              
+            </section>
+          </td>
+          <td>
+            <code>Likes dogs</code>
+          </td>
+          <td>Whether this person likes dogs or not</td>
+          <td>
+            
+              <i class="fa fa-toggle-off" title="Boolean"></i>
+            
+              Boolean
+          </td>
+          
+        </tr>
+        
+        <tr class="field">
+          <td>
+            <section id="field-2-3">
+              
+               <i class="fa fa-edit" title="Field is transformed or calculated"></i>
+            </section>
+          </td>
+          <td>
+            <code>is_male_likes_cake</code>
+          </td>
+          <td>Indicates whether this individual is both a male and likes cake. This is an example of a "tranformed" field.</td>
+          <td>
+            
+              <i class="fa fa-toggle-off" title="Boolean"></i>
+            
+              Boolean
+          </td>
+          
+        </tr>
+        
+      </tbody>
+    </table>
+  </div>
+</div>
+
+
 
     </div>
     <div class="footer">
