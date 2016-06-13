@@ -34,7 +34,7 @@ Each dataset `yaml` files has the following structure:
 title: "Some title"
 description: "Some description"
 categories:
-  - title: "Some category title
+  - title: "Some category title"
     description: "Some category description"
     fields:
       - name: "Some field name as found in the .csv file"
