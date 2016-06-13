@@ -51,9 +51,9 @@ Usage:
 
 ```yaml
 fields:
-      - name: "Some field name as found in the .csv file"
-        description: "Some description for this field"
-        type: "Date"
+  - name: "Some field name as found in the .csv file"
+      description: "Some description for this field"
+      type: "Date"
 ```
 
 While you can provide any string for `type`, Datadocs expects one of the following:
@@ -74,9 +74,9 @@ Usage:
 
 ```yaml
 fields:
-      - name: "Some field name as found in the .csv file"
-        description: "Some description for this field"
-        private: false
+  - name: "Some field name as found in the .csv file"
+    description: "Some description for this field"
+    private: false
 ```
 
 ### Transformed
@@ -87,9 +87,9 @@ Usage:
 
 ```yaml
 fields:
-      - name: "Some field name as found in the .csv file"
-        description: "Some description for this field"
-        transformed: false
+  - name: "Some field name as found in the .csv file"
+    description: "Some description for this field"
+    transformed: false
 ```
 
 ## Registering your data
