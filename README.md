@@ -4,10 +4,10 @@ Datadocs is static documentation for your datasets. I developed Datadocs to orga
 
 Some key features of datadocs:
 
-- Fully searchable static documentation that can be hosted anywhere, including off Dropbox or S3.
-- Logically categorize fields, making it easier to quickly understand what a field a dataset contains.
+- Fully searchable static documentation that can be hosted anywhere, including on Dropbox or S3.
+- Logically categorize fields, making it easier to quickly understand what fields a dataset contains.
 - Designate which fields are private or protected, especially useful when sharing with external partners.
-- Designate which fields are raw versus which have undergone some transformation. It's common to create new variables based on the raw data one has, keeping track of this makes for better, cleaner analysis.
+- Designate which fields are raw versus which have undergone some transformation. It is common to create new variables based on the raw data one has, keeping track of this makes for better, cleaner analysis.
 
 You can view an example of datadocs with some dummy data on my personal site at [fullcontactphilanthropy/datadocs][example]. Datadocs is written for and tested in Python 3.4.
 
