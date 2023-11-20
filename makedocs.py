@@ -259,7 +259,7 @@ if __name__ == "__main__":
         os.makedirs('site')
 
     # get the data docs settings
-    datadocs = yaml.load(open("docs/datadocs.yaml", "r"))
+    datadocs = yaml.load(open("docs/datadocs.yaml", "r"), Loader=yaml.Loader)
     showUncategorized = datadocs['show_uncategorized']
     showPercentAnswered = datadocs['show_percent_answered']
     showPrivate = datadocs['show_private']
@@ -271,7 +271,7 @@ if __name__ == "__main__":
         datasetName = selectedDataset['name']
 
         # open the dataset yaml
-        selectedDataset = yaml.load(open("docs/" + datasetName + ".yaml", "r"))
+        selectedDataset = yaml.load(open("docs/" + datasetName + ".yaml", "r"), Loader=yaml.Loader)
 
         datasetTitle = selectedDataset['title']
         datasetDescription = selectedDataset['description']
